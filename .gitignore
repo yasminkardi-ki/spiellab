@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.vercel/
+.env*
+.DS_Store
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/App/Pods/
+ios/DerivedData/
+*.xcuserstate
+xcuserdata/

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alles ist DUAL · KARDI.</title>
+<meta name="theme-color" content="#F5F4F2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="DUAL">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="./icons/icon-192.png">
+<link rel="stylesheet" href="./fonts.css">
+<link rel="stylesheet" href="./mobile.css">
+<script src="./vendor/react.production.min.js"></script>
+<script src="./vendor/react-dom.production.min.js"></script>
+<script src="./mobile.js" defer></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#18202E"></rect><circle cx="34" cy="50" r="9" fill="none" stroke="#E8489A" stroke-width="3"></circle><line x1="43" y1="50" x2="62" y2="50" stroke="#1FAFC7" stroke-width="3"></line><circle cx="68" cy="50" r="6" fill="#1FAFC7"></circle></svg></template>
+<script src="./dual-cards.js"></script>
+<style>
+html,body{overflow-x:hidden;-webkit-text-size-adjust:100%;}
+button,a,input{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+body{margin:0;background:#F5F4F2;color:#18202E;font-family:'Montserrat',sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:#0E7F93;text-decoration:none;}a:hover{color:#C42E7C;}
+button{font-family:inherit;}
+input{font-family:inherit;}
+@keyframes dualPop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
+</style>
+</helmet>
+<div style="min-height:100vh;background-color:#F5F4F2;background-image:linear-gradient(rgba(24,32,46,0.045) 1px,transparent 1px),linear-gradient(90deg,rgba(24,32,46,0.045) 1px,transparent 1px);background-size:48px 48px;font-family:'Montserrat',sans-serif;color:#18202E;">
+
+  <header class="app-header" style="position:sticky;top:0;z-index:20;background:rgba(245,244,242,0.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(24,32,46,0.08);">
+    <div style="max-width:1240px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) 12px max(18px, env(safe-area-inset-left));display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;">
+      <div role="button" tabindex="0" aria-label="Zur Startseite" onKeyDown="{{ brandKey }}" onClick="{{ goStart }}" style="cursor:pointer;display:flex;flex-direction:column;gap:3px;">
+        <div style="font-size:17px;font-weight:400;letter-spacing:0.3em;color:#18202E;">KARDI.</div>
+        <div style="display:flex;gap:6px;font-size:7.5px;font-weight:600;letter-spacing:0.26em;text-transform:uppercase;"><span style="color:#0E7F93;">Think deep.</span><span style="color:#C42E7C;">Make simple.</span></div>
+      </div>
+      <nav class="app-nav" aria-label="Hauptnavigation" style="display:flex;gap:clamp(14px,4vw,26px);align-items:center;flex-wrap:wrap;order:3;flex:1 1 auto;justify-content:center;">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="3">
+          <button onClick="{{ n.go }}" style="background:none;border:none;padding:10px 0;min-height:44px;cursor:pointer;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:{{ n.color }};border-bottom:2px solid {{ n.line }};">{{ n.label }}</button>
+        </sc-for>
+      </nav>
+      <button class="new-game" onClick="{{ goSetup }}" style="border:1.5px solid #0E7F93;background:transparent;color:#0E7F93;border-radius:999px;padding:9px 18px;font-size:10.5px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;border-color:#18202E;color:#FFFFFF;">Neues Spiel →</button>
+    </div>
+  </header>
+
+  <sc-if value="{{ isStart }}" hint-placeholder-val="{{ true }}">
+    <main class="start-screen" style="max-width:1240px;margin:0 auto;overflow:hidden;padding:clamp(28px,6vw,72px) max(18px, env(safe-area-inset-left)) calc(96px + env(safe-area-inset-bottom));display:flex;flex-wrap:wrap;gap:clamp(28px,6vw,56px);align-items:center;">
+      <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:26px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:#0E7F93;">01 · Ein Gesprächsspiel von KARDI.</div>
+        <h1 style="margin:0;font-size:clamp(52px,8vw,96px);font-weight:300;letter-spacing:0.16em;line-height:1.02;text-transform:uppercase;color:#18202E;display:flex;flex-direction:column;">
+          <span>Alles</span><span>ist</span><span style="color:#0E7F93;">Du<span style="color:#C42E7C;">al</span></span>
+        </h1>
+        <div style="display:flex;align-items:center;max-width:360px;">
+          <div style="width:9px;height:9px;border-radius:50%;border:1.5px solid #E8489A;flex:none;"></div>
+          <div style="flex:1;height:1px;background:linear-gradient(90deg,#E8489A,#1FAFC7);"></div>
+          <div style="width:7px;height:7px;border-radius:50%;background:#1FAFC7;flex:none;"></div>
+        </div>
+        <p style="margin:0;font-size:22px;font-weight:300;line-height:1.45;color:#18202E;max-width:520px;text-wrap:pretty;">Jede Eigenschaft hat zwei Seiten. <span style="color:#C42E7C;">Du sitzt dazwischen.</span></p>
+        <p style="margin:0;font-size:15px;line-height:1.7;color:#3A4250;max-width:520px;text-wrap:pretty;">Mut kann dich über dich hinauswachsen lassen – oder dich übernehmen. Höflichkeit schont andere – oder verschluckt dich selbst. „Alles ist DUAL“ zeigt nicht Gut gegen Böse, sondern: dieselbe Eigenschaft, zwei mögliche Wirkungen.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:0;border-top:1px solid rgba(24,32,46,0.1);max-width:560px;">
+          <div style="flex:1 1 120px;padding:14px 16px 0 0;display:flex;flex-direction:column;gap:4px;"><div style="font-size:9.5px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#5A6270;">Spielende</div><div style="font-size:15px;font-weight:500;">2–6 Personen</div></div>
+          <div style="flex:1 1 120px;padding:14px 16px 0 0;display:flex;flex-direction:column;gap:4px;"><div style="font-size:9.5px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#5A6270;">Alter</div><div style="font-size:15px;font-weight:500;">ab 14 Jahren</div></div>
+          <div style="flex:1 1 120px;padding:14px 16px 0 0;display:flex;flex-direction:column;gap:4px;"><div style="font-size:9.5px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#5A6270;">Dauer</div><div style="font-size:15px;font-weight:500;">20–60 Minuten</div></div>
+          <div style="flex:1 1 120px;padding:14px 16px 0 0;display:flex;flex-direction:column;gap:4px;"><div style="font-size:9.5px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#5A6270;">Karten</div><div style="font-size:15px;font-weight:500;">42 + Joker</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;">
+          <button onClick="{{ startPrimary }}" style="border:none;background:#0E7F93;color:#FFFFFF;border-radius:999px;padding:16px 28px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;">{{ startLabel }} →</button>
+          <button onClick="{{ goRules }}" style="border:1.5px solid #C42E7C;background:transparent;color:#C42E7C;border-radius:999px;padding:15px 24px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;border-color:#18202E;color:#FFFFFF;">Spielregeln</button>
+          <button onClick="{{ goCards }}" style="border:1.5px solid rgba(24,32,46,0.25);background:transparent;color:#18202E;border-radius:999px;padding:15px 24px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;border-color:#18202E;color:#FFFFFF;">Alle 43 Karten</button>
+        </div>
+      </div>
+      <div class="hero-cards" style="flex:1 1 320px;min-width:0;height:clamp(440px,110vw,520px);position:relative;display:flex;justify-content:center;align-items:center;">
+        <div style="position:absolute;width:260px;height:390px;transform:translateX(clamp(-150px,-22vw,-64px)) rotate({{ tiltA }}deg);transition:transform .4s;" style-hover="transform:translateX(clamp(-170px,-25vw,-72px)) translateY(-14px) rotate(-12deg);">
+          <dc-import name="DualKarte" card="{{ heroA }}" story-size="{{ 10.5 }}" hint-size="260px,390px" style="width:260px;height:390px;"></dc-import>
+        </div>
+        <div style="position:absolute;width:260px;height:390px;transform:translateX(clamp(64px,22vw,150px)) rotate({{ tiltB }}deg);transition:transform .4s;" style-hover="transform:translateX(clamp(72px,25vw,170px)) translateY(-14px) rotate(12deg);">
+          <dc-import name="DualKarte" card="{{ heroB }}" flipped="{{ true }}" hint-size="260px,390px" style="width:260px;height:390px;"></dc-import>
+        </div>
+        <div onClick="{{ startPrimary }}" style="position:absolute;width:270px;height:405px;border-radius:26px;background:#18202E;box-shadow:0 30px 60px -24px rgba(24,32,46,0.6);display:flex;flex-direction:column;justify-content:space-between;padding:26px;box-sizing:border-box;color:#FFFFFF;cursor:pointer;transition:transform .4s;transform:translateY(-10px);" style-hover="transform:translateY(-24px) scale(1.02);">
+          <div style="display:flex;justify-content:space-between;font-size:10px;letter-spacing:0.3em;"><span>KARDI.</span><span style="color:#1FAFC7;">43</span></div>
+          <div style="display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center;">
+            <div style="font-size:30px;font-weight:300;letter-spacing:0.16em;line-height:1.15;text-transform:uppercase;">Alles<br>ist<br><span style="color:#1FAFC7;">Dual</span></div>
+            <div style="display:flex;align-items:center;width:120px;">
+              <div style="width:9px;height:9px;border-radius:50%;border:1.5px solid #E8489A;flex:none;"></div>
+              <div style="flex:1;height:1px;background:linear-gradient(90deg,#E8489A,#1FAFC7);"></div>
+              <div style="width:7px;height:7px;border-radius:50%;background:#1FAFC7;flex:none;"></div>
+            </div>
+          </div>
+          <div style="font-size:8.5px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.7);text-align:center;">Tippen zum Mitspielen</div>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isSetup }}" hint-placeholder-val="{{ false }}">
+    <main style="max-width:1100px;margin:0 auto;padding:clamp(28px,6vw,56px) max(18px, env(safe-area-inset-left)) calc(96px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:48px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:#0E7F93;">02 · Vorbereitung</div>
+        <h2 style="margin:0;font-size:clamp(28px,4vw,40px);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;line-height:1.15;">Wer sitzt <span style="color:#C42E7C;">auf der Bank?</span></h2>
+      </div>
+
+      <section style="border-top:1px solid #18202E;padding-top:20px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#18202E;">01 · Spielende</div>
+          <div style="font-size:13px;color:#5A6270;">Wer zuletzt auf einer Parkbank saß, beginnt. Tippe auf den Kreis.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:12px;">
+          <sc-for list="{{ setupPlayers }}" as="p" hint-placeholder-count="2">
+            <div style="background:#FFFFFF;border:1px solid rgba(24,32,46,0.1);border-radius:999px;display:flex;align-items:center;gap:10px;padding:6px 8px 6px 6px;">
+              <button onClick="{{ p.onStarter }}" title="Beginnt" style="width:36px;height:36px;border-radius:50%;flex:none;cursor:pointer;border:1.5px solid {{ p.ring }};background:{{ p.fill }};color:{{ p.numColor }};font-size:12px;font-weight:600;">{{ p.no }}</button>
+              <input value="{{ p.name }}" onChange="{{ p.onName }}" placeholder="{{ p.placeholder }}" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font-size:16px;color:#18202E;padding:8px 0;"/>
+              <sc-if value="{{ p.canRemove }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ p.onRemove }}" title="Entfernen" style="width:30px;height:30px;border-radius:50%;border:1px solid rgba(24,32,46,0.2);background:transparent;color:#5A6270;cursor:pointer;font-size:14px;flex:none;" style-hover="border-color:#C42E7C;color:#C42E7C;">×</button>
+              </sc-if>
+            </div>
+          </sc-for>
+          <sc-if value="{{ canAddPlayer }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ addPlayer }}" style="border:1.5px dashed rgba(24,32,46,0.25);background:transparent;border-radius:999px;padding:14px;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#0E7F93;cursor:pointer;" style-hover="border-color:#0E7F93;">+ Person dazu</button>
+          </sc-if>
+        </div>
+        <div style="font-size:13px;color:#5A6270;">{{ starterHint }}</div>
+      </section>
+
+      <section style="border-top:1px solid #18202E;padding-top:20px;display:flex;flex-direction:column;gap:18px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#18202E;">02 · Wie wollt ihr spielen?</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:12px;">
+          <sc-for list="{{ variants }}" as="v" hint-placeholder-count="7">
+            <button onClick="{{ v.onPick }}" style="text-align:left;cursor:pointer;background:{{ v.bg }};color:{{ v.fg }};border:1px solid {{ v.border }};border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:transform .2s;" style-hover="transform:translateY(-3px) rotate(-0.6deg);">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;">
+                <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:{{ v.accent }};">{{ v.no }} · {{ v.players }}</div>
+                <div style="width:14px;height:14px;border-radius:50%;border:1.5px solid {{ v.accent }};background:{{ v.dot }};"></div>
+              </div>
+              <div style="font-size:18px;font-weight:500;letter-spacing:0.04em;">{{ v.name }}</div>
+              <div style="font-size:13px;line-height:1.6;opacity:0.9;text-wrap:pretty;">{{ v.ablauf }}</div>
+              <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:{{ v.accent }};margin-top:auto;">Gut für: {{ v.gut }}</div>
+            </button>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="border-top:1px solid #18202E;padding-top:20px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#18202E;">03 · Welche Karten?</div>
+          <div style="font-size:13px;color:#5A6270;">{{ catHint }}</div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <sc-for list="{{ setupCats }}" as="c" hint-placeholder-count="7">
+            <button onClick="{{ c.onPick }}" style="cursor:pointer;border-radius:999px;padding:10px 16px;font-size:12.5px;font-weight:500;border:1.5px solid {{ c.color }};background:{{ c.bg }};color:{{ c.fg }};display:flex;gap:8px;align-items:center;">
+              <span style="font-size:10px;font-weight:600;letter-spacing:0.15em;">{{ c.no }}</span><span>{{ c.name }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <button onClick="{{ toggleDice }}" style="align-self:flex-start;cursor:pointer;display:flex;align-items:center;gap:14px;background:transparent;border:none;padding:6px 0;">
+          <div style="width:46px;height:26px;border-radius:999px;background:{{ diceTrack }};position:relative;transition:background .2s;">
+            <div style="position:absolute;top:3px;left:{{ diceKnob }}px;width:20px;height:20px;border-radius:50%;background:#FFFFFF;transition:left .2s;box-shadow:0 1px 3px rgba(24,32,46,0.3);"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px;text-align:left;">
+            <div style="font-size:14px;font-weight:500;color:#18202E;">Würfelvariante</div>
+            <div style="font-size:12.5px;color:#5A6270;">Die gewürfelte Zahl bestimmt die Kategorie.</div>
+          </div>
+        </button>
+      </section>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid rgba(24,32,46,0.1);padding-top:24px;">
+        <div style="font-size:14px;color:#3A4250;max-width:560px;line-height:1.6;font-style:italic;">„Du darfst selbst erlebt, frei erfunden oder aus Sicht der Figur antworten. Passen geht auch. Wir hören zu – wir lösen einander nicht.“</div>
+        <button onClick="{{ startGame }}" style="border:none;background:#0E7F93;color:#FFFFFF;border-radius:999px;padding:17px 30px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;">Karten mischen →</button>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isTable }}" hint-placeholder-val="{{ false }}">
+    <main style="max-width:1240px;margin:0 auto;padding:clamp(18px,4vw,28px) max(18px, env(safe-area-inset-left)) calc(96px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:28px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <sc-for list="{{ tablePlayers }}" as="p" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:10px;background:{{ p.bg }};color:{{ p.fg }};border:1px solid {{ p.border }};border-radius:999px;padding:6px 6px 6px 16px;transition:all .25s;">
+              <div style="font-size:13px;font-weight:500;">{{ p.name }}</div>
+              <div style="display:flex;gap:3px;">
+                <sc-for list="{{ p.marks }}" as="m" hint-placeholder-count="0">
+                  <div style="width:9px;height:9px;border-radius:50%;background:#1FAFC7;"></div>
+                </sc-for>
+              </div>
+              <sc-if value="{{ p.joker }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:8.5px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;border:1px solid #E8489A;color:{{ p.jokerColor }};border-radius:999px;padding:3px 8px;">Geduld</div>
+              </sc-if>
+              <button onClick="{{ p.onMark }}" title="Wendemarker vergeben" style="width:32px;height:32px;border-radius:50%;border:1px solid {{ p.btnBorder }};background:transparent;color:{{ p.fg }};cursor:pointer;font-size:14px;line-height:1;" style-hover="border-color:#1FAFC7;">+</button>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:16px;align-items:center;">
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#5A6270;">{{ deckCount }} im Stapel · {{ variantName }}</div>
+          <button onClick="{{ endGame }}" style="border:1.5px solid #C42E7C;background:transparent;color:#C42E7C;border-radius:999px;padding:9px 16px;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;border-color:#18202E;color:#FFFFFF;">Schlussrunde</button>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,48px);align-items:flex-start;">
+        <div class="table-card" style="flex:1 1 300px;max-width:400px;min-width:0;width:100%;height:clamp(520px,150vw,600px);margin:0 auto;position:relative;">
+          <sc-if value="{{ showPile }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;inset:0;">
+              <div style="position:absolute;inset:0;border-radius:26px;background:#18202E;opacity:0.35;transform:rotate({{ pileT1 }}deg) translate(10px,8px);"></div>
+              <div style="position:absolute;inset:0;border-radius:26px;background:#18202E;opacity:0.6;transform:rotate({{ pileT2 }}deg) translate(-6px,4px);"></div>
+              <div onClick="{{ pileClick }}" style="position:absolute;inset:0;border-radius:26px;background:#18202E;box-shadow:0 30px 60px -24px rgba(24,32,46,0.6);display:flex;flex-direction:column;justify-content:space-between;padding:30px;box-sizing:border-box;color:#FFFFFF;cursor:pointer;transition:transform .3s;" style-hover="transform:translateY(-10px) rotate(-1deg);">
+                <div style="display:flex;justify-content:space-between;font-size:11px;letter-spacing:0.3em;"><span>KARDI.</span><span style="color:#1FAFC7;">{{ deckCount }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center;">
+                  <div style="font-size:40px;font-weight:300;letter-spacing:0.16em;line-height:1.15;text-transform:uppercase;">Alles<br>ist<br><span style="color:#1FAFC7;">Dual</span></div>
+                  <div style="display:flex;align-items:center;width:150px;">
+                    <div style="width:9px;height:9px;border-radius:50%;border:1.5px solid #E8489A;flex:none;"></div>
+                    <div style="flex:1;height:1px;background:linear-gradient(90deg,#E8489A,#1FAFC7);"></div>
+                    <div style="width:7px;height:7px;border-radius:50%;background:#1FAFC7;flex:none;"></div>
+                  </div>
+                </div>
+                <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.75);text-align:center;">{{ pileLabel }}</div>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ showCard }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ toggleFlip }}" style="position:absolute;inset:0;cursor:pointer;transform:rotate({{ cardTilt }}deg);animation:dualPop .45s cubic-bezier(.2,.8,.25,1.2);">
+              <dc-import name="DualKarte" card="{{ current }}" flipped="{{ flipped }}" story-size="{{ storySize }}" hint-size="100%,100%" style="width:100%;height:100%;"></dc-import>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:22px;">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:#0E7F93;">{{ stepEyebrow }}</div>
+            <div style="font-size:clamp(24px,3vw,32px);font-weight:300;line-height:1.25;color:#18202E;text-wrap:balance;">{{ stepTitle }}</div>
+            <div style="font-size:14.5px;line-height:1.65;color:#3A4250;text-wrap:pretty;">{{ stepText }}</div>
+          </div>
+
+          <sc-if value="{{ showDice }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:20px;">
+              <button onClick="{{ rollDice }}" style="width:84px;height:84px;border-radius:22px;border:none;background:{{ rollColor }};color:#FFFFFF;font-size:38px;font-weight:300;cursor:pointer;transform:rotate({{ rollSpin }}deg);transition:transform .7s cubic-bezier(.2,.8,.25,1.2),background .3s;box-shadow:0 14px 28px -14px rgba(24,32,46,0.6);">{{ rollFace }}</button>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:{{ rollColor }};">{{ rollCatLabel }}</div>
+                <div style="font-size:15px;font-weight:500;color:#18202E;">{{ rollCatName }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showDraw }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <button onClick="{{ pileClick }}" style="border:none;background:#0E7F93;color:#FFFFFF;border-radius:999px;padding:16px 28px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;">{{ drawLabel }} →</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isJokerStep }}" hint-placeholder-val="{{ false }}">
+            <div style="border-top:1px solid #18202E;padding-top:16px;display:flex;flex-direction:column;gap:14px;">
+              <div style="font-size:22px;font-weight:300;font-style:italic;color:#3A4250;">„Das lasse ich noch reifen.“</div>
+              <button onClick="{{ keepJoker }}" style="align-self:flex-start;border:none;background:#C42E7C;color:#FFFFFF;border-radius:999px;padding:15px 26px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;">Behalten und weiterziehen →</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isRead }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <sc-if value="{{ isBank }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                  <div style="background:#FFFFFF;border:1px solid rgba(24,32,46,0.1);border-radius:999px;padding:8px 16px;font-size:13px;"><span style="font-weight:600;color:#0E7F93;">„er“</span> · {{ bankEr }} fragt</div>
+                  <div style="background:#FFFFFF;border:1px solid rgba(24,32,46,0.1);border-radius:999px;padding:8px 16px;font-size:13px;"><span style="font-weight:600;color:#C42E7C;">„sie“</span> · {{ bankSie }} antwortet mit Gegenfragen</div>
+                </div>
+              </sc-if>
+              <button onClick="{{ flipToAsk }}" style="align-self:flex-start;border:none;background:#0E7F93;color:#FFFFFF;border-radius:999px;padding:16px 28px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;">{{ flipLabel }} →</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isAsk }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(46%,170px),1fr));gap:10px;">
+              <sc-for list="{{ fragearten }}" as="f" hint-placeholder-count="4">
+                <button onClick="{{ f.onPick }}" style="text-align:left;cursor:pointer;background:#FFFFFF;border:1px solid rgba(24,32,46,0.1);border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;transition:transform .2s,border-color .2s;" style-hover="transform:translateY(-3px) rotate(0.8deg);border-color:#0E7F93;">
+                  <div style="width:24px;height:2px;background:{{ f.color }};"></div>
+                  <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:{{ f.color }};">0{{ f.n }}</div>
+                  <div style="font-size:15px;font-weight:500;color:#18202E;">{{ f.name }}</div>
+                  <div style="font-size:13px;font-style:italic;color:#5A6270;">{{ f.lead }}</div>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isAnswer }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:22px;">
+              <div style="background:#FFFFFF;border-radius:24px;border:1px solid rgba(24,32,46,0.08);padding:24px 26px;display:flex;flex-direction:column;gap:12px;animation:dualPop .35s ease-out;">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+                  <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:{{ qColor }};">Frageart 0{{ qNo }} · {{ qName }}</div>
+                  <sc-if value="{{ canChangeQ }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ changeQ }}" style="background:none;border:none;cursor:pointer;font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#5A6270;" style-hover="color:#C42E7C;">Andere Frage</button>
+                  </sc-if>
+                </div>
+                <div style="font-size:clamp(19px,2.2vw,23px);font-weight:400;line-height:1.45;color:#18202E;text-wrap:pretty;">{{ qText }}</div>
+                <sc-if value="{{ isQ4 }}" hint-placeholder-val="{{ false }}">
+                  <div style="border-top:1px solid rgba(24,32,46,0.08);padding-top:14px;display:flex;flex-direction:column;gap:10px;">
+                    <sc-if value="{{ wennShown }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-direction:column;gap:6px;animation:dualPop .35s ease-out;">
+                        <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#C42E7C;">Der DUAL-Moment</div>
+                        <div style="font-size:20px;font-weight:300;line-height:1.45;color:#18202E;">Und wenn du wüsstest, dass {{ wennText }}</div>
+                        <div style="font-size:13px;color:#5A6270;">Du darfst deine Entscheidung ändern – musst aber nicht.</div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ wennHidden }}" hint-placeholder-val="{{ true }}">
+                      <button onClick="{{ revealWenn }}" style="align-self:flex-start;border:1.5px solid #C42E7C;background:transparent;color:#C42E7C;border-radius:999px;padding:11px 18px;font-size:10.5px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;border-color:#18202E;color:#FFFFFF;">Und wenn du wüsstest, dass … ?</button>
+                    </sc-if>
+                  </div>
+                </sc-if>
+              </div>
+
+              <sc-if value="{{ isSeite }}" hint-placeholder-val="{{ false }}">
+                <div style="border-top:1px solid #18202E;padding-top:14px;display:flex;flex-direction:column;gap:8px;">
+                  <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#C42E7C;">Seitenwechsel</div>
+                  <div style="font-size:15px;line-height:1.6;color:#3A4250;">Jetzt verteidigst du die Gegenseite – überzeugend. Auf welcher Seite standest du gerade?</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isBank }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                  <div style="font-size:13px;color:#3A4250;">Gegenfragen von „sie“:</div>
+                  <sc-for list="{{ bankDots }}" as="d" hint-placeholder-count="3">
+                    <button onClick="{{ d.onClick }}" style="width:40px;height:40px;border-radius:50%;cursor:pointer;border:1.5px solid #C42E7C;background:{{ d.bg }};color:{{ d.fg }};font-size:11px;font-weight:600;">{{ d.n }}</button>
+                  </sc-for>
+                  <div style="font-size:13px;font-weight:500;color:#0E7F93;">{{ bankHint }}</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ showWippe }}" hint-placeholder-val="{{ false }}">
+                <div style="border-top:1px solid #18202E;padding-top:16px;display:flex;flex-direction:column;gap:14px;">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;">
+                    <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#18202E;">Die Wippe · Wo stehst du gerade?</div>
+                    <div style="font-size:12px;color:#5A6270;">{{ wippeHint }}</div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;font-size:13.5px;font-weight:500;line-height:1.35;">
+                    <div style="color:#0E7F93;">{{ sideA }}</div>
+                    <div style="color:#C42E7C;text-align:right;">{{ sideB }}</div>
+                  </div>
+                  <div style="position:relative;height:40px;">
+                    <div style="position:absolute;left:14px;right:14px;top:19px;height:2px;background:linear-gradient(90deg,#0E7F93,#1FAFC7,#E8489A,#C42E7C);border-radius:2px;"></div>
+                    <sc-for list="{{ wippe }}" as="w" hint-placeholder-count="5">
+                      <button onClick="{{ w.onClick }}" title="{{ w.title }}" style="position:absolute;left:{{ w.left }};top:{{ w.top }}px;width:{{ w.size }}px;height:{{ w.size }}px;margin-left:{{ w.offset }}px;border-radius:50%;cursor:pointer;border:2px solid {{ w.color }};background:{{ w.bg }};transition:all .25s cubic-bezier(.2,.8,.25,1.3);padding:0;"></button>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ switchDetected }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:rgba(31,175,199,0.13);border-radius:18px;padding:14px 18px;animation:dualPop .35s ease-out;">
+                      <div style="font-size:14px;color:#18202E;"><span style="font-weight:600;color:#0E7F93;">Seitenwechsel!</span> „Hm, eigentlich sehe ich es jetzt anders.“</div>
+                      <button onClick="{{ awardActive }}" style="border:none;background:#0E7F93;color:#FFFFFF;border-radius:999px;padding:10px 16px;font-size:10.5px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;">Wendemarker für {{ activeName }}</button>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isZwilling }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ openTwin }}" style="cursor:pointer;background:#FFFFFF;border-radius:22px;border:1px solid rgba(24,32,46,0.08);padding:18px 22px;display:flex;flex-direction:column;gap:10px;transform:rotate(-0.8deg);" style-hover="transform:rotate(0.6deg) translateY(-2px);">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;">
+                    <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:{{ twinColor }};">Zwillingskarte {{ twinNr }} · {{ twinTitle }}</div>
+                    <div style="font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#5A6270;">Ansehen →</div>
+                  </div>
+                  <div style="font-size:14.5px;font-weight:500;color:#18202E;">{{ twinSides }}</div>
+                  <div style="font-size:14px;color:#3A4250;font-style:italic;">Welche Seiten berühren sich?</div>
+                </div>
+              </sc-if>
+
+              <div style="border-top:1px solid #18202E;padding-top:14px;display:flex;flex-direction:column;gap:12px;">
+                <button onClick="{{ toggleBucay }}" style="background:none;border:none;padding:0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;width:100%;">
+                  <span style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#18202E;">Bucay-Runde · optional</span>
+                  <span style="width:30px;height:30px;border-radius:50%;border:1px solid #18202E;display:flex;align-items:center;justify-content:center;font-size:13px;color:#18202E;transform:rotate({{ bucayRot }}deg);transition:transform .25s;">→</span>
+                </button>
+                <sc-if value="{{ bucayOpen }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:10px;">
+                    <div style="font-size:14px;line-height:1.65;color:#3A4250;text-wrap:pretty;">{{ bucayText }}</div>
+                    <div style="font-size:13px;color:#5A6270;">Kennt jemand die Geschichte? Dann erzählt sie in eigenen Worten nach. Danach die Brückenfrage:</div>
+                    <div style="font-size:18px;font-weight:300;line-height:1.45;color:#C42E7C;">{{ brueckeText }}</div>
+                  </div>
+                </sc-if>
+              </div>
+
+              <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+                <button onClick="{{ nextTurn }}" style="border:none;background:#0E7F93;color:#FFFFFF;border-radius:999px;padding:16px 28px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;">{{ nextLabel }} →</button>
+                <sc-if value="{{ canUseJoker }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ useJoker }}" style="border:1.5px solid #E8489A;background:transparent;color:#C42E7C;border-radius:999px;padding:15px 22px;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;border-color:#18202E;color:#FFFFFF;">Geduld einsetzen · vertagen</button>
+                </sc-if>
+              </div>
+              <div style="font-size:12.5px;color:#5A6270;line-height:1.6;">Danach dürfen alle anderen kurz ergänzen. Keine Ratschläge ungefragt. Keine Diagnosen. Was am Tisch erzählt wird, bleibt am Tisch.</div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isEnd }}" hint-placeholder-val="{{ false }}">
+    <main style="max-width:1000px;margin:0 auto;padding:clamp(28px,6vw,56px) max(18px, env(safe-area-inset-left)) calc(96px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:#0E7F93;">08 · Ende</div>
+        <h2 style="margin:0;font-size:clamp(28px,4vw,40px);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;line-height:1.15;">Die <span style="color:#C42E7C;">Schlussrunde</span></h2>
+        <p style="margin:0;font-size:16px;line-height:1.65;color:#3A4250;max-width:600px;">Jede Person nennt die Karte, die ihr heute am meisten über sich verraten hat. Wendemarker sind keine Punkte, sondern eine kleine Auszeichnung fürs Mitdenken.</p>
+      </div>
+      <sc-if value="{{ hasDeferred }}" hint-placeholder-val="{{ false }}">
+        <section style="border-top:1px solid #18202E;padding-top:18px;display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#C42E7C;">Geduld eingelöst · jetzt wird geantwortet</div>
+          <sc-for list="{{ deferred }}" as="d" hint-placeholder-count="1">
+            <div style="background:#FFFFFF;border-radius:20px;padding:16px 20px;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(24,32,46,0.08);">
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#5A6270;">{{ d.player }} · {{ d.nr }} {{ d.title }}</div>
+              <div style="font-size:16px;line-height:1.5;color:#18202E;">{{ d.q }}</div>
+            </div>
+          </sc-for>
+        </section>
+      </sc-if>
+      <section style="display:flex;flex-direction:column;gap:14px;">
+        <sc-for list="{{ endPlayers }}" as="p" hint-placeholder-count="2">
+          <div style="border-top:1px solid #18202E;padding-top:16px;display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+              <div style="font-size:20px;font-weight:500;letter-spacing:0.04em;">{{ p.name }}</div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="display:flex;gap:4px;">
+                  <sc-for list="{{ p.marks }}" as="m" hint-placeholder-count="0">
+                    <div style="width:12px;height:12px;border-radius:50%;background:#1FAFC7;"></div>
+                  </sc-for>
+                </div>
+                <div style="font-size:12px;color:#5A6270;">{{ p.markText }}</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <sc-for list="{{ p.cards }}" as="c" hint-placeholder-count="3">
+                <button onClick="{{ c.onPick }}" style="cursor:pointer;border-radius:999px;padding:8px 14px;font-size:12.5px;font-weight:500;border:1.5px solid {{ c.color }};background:{{ c.bg }};color:{{ c.fg }};transition:transform .2s;" style-hover="transform:translateY(-2px) rotate(-1deg);">{{ c.nr }} · {{ c.name }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ noPlayed }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:14px;color:#5A6270;">Heute wurde noch keine Karte gespielt.</div>
+        </sc-if>
+      </section>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button onClick="{{ resumeGame }}" style="border:1.5px solid #0E7F93;background:transparent;color:#0E7F93;border-radius:999px;padding:15px 24px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;border-color:#18202E;color:#FFFFFF;">Zurück an den Tisch</button>
+        <button onClick="{{ goSetup }}" style="border:none;background:#0E7F93;color:#FFFFFF;border-radius:999px;padding:16px 28px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;">Neue Runde →</button>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isRules }}" hint-placeholder-val="{{ false }}">
+    <main style="max-width:960px;margin:0 auto;padding:clamp(28px,6vw,56px) max(18px, env(safe-area-inset-left)) calc(96px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:48px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:#0E7F93;">Spielanleitung</div>
+        <h2 style="margin:0;font-size:clamp(28px,4vw,40px);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;line-height:1.15;">Alles ist <span style="color:#C42E7C;">DUAL</span></h2>
+        <p style="margin:0;font-size:16px;line-height:1.7;color:#3A4250;">Ein Gesprächs- und Reflexionskartenspiel mit 42 Eigenschaften, einer Zusatzkarte und kleinen Geschichten von einer Parkbank.</p>
+      </div>
+
+      <section style="display:flex;flex-wrap:wrap;gap:14px 24px;border-top:1px solid #18202E;padding-top:20px;">
+        <div style="flex:0 0 200px;max-width:100%;font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#C42E7C;">01 · Die Idee</div>
+        <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:1.7;color:#3A4250;">
+          <p style="margin:0;">Jede Karte erzählt eine kurze Dialoggeschichte. Zwei Menschen treffen sich immer wieder auf derselben Bank: Er bringt Fragen mit. Sie antwortet selten direkt, meistens mit einer Gegenfrage, einer Birne oder einem trockenen Satz. Die Moral spricht niemand aus – die findet die Runde selbst.</p>
+          <p style="margin:0;">Die Erzählhaltung ist inspiriert von Jorge Bucays „Komm, ich erzähl dir eine Geschichte“: Ein Fragender, eine Erzählende, eine kleine Geschichte, die mehr fragt als erklärt. Die Texte auf den Karten sind eigenständig geschrieben. Bucays Geschichten werden nicht abgedruckt, sondern auf jeder Karte als Resonanz genannt: als Lesetipp und als zweite Tür zum selben Thema.</p>
+          <p style="margin:0;font-weight:500;color:#18202E;">Ziel: Nicht gewinnen, sondern entdecken. Wann hilft eine Eigenschaft – und wann steht sie im Weg?</p>
+        </div>
+      </section>
+
+      <section style="display:flex;flex-wrap:wrap;gap:14px 24px;border-top:1px solid #18202E;padding-top:20px;">
+        <div style="flex:0 0 200px;max-width:100%;font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#0E7F93;">02 · Material</div>
+        <div style="flex:1 1 320px;min-width:0;font-size:15px;line-height:1.7;color:#3A4250;">42 Eigenschaftskarten in 6 Kategorien, 1 Zusatzkarte „Geduld“, 6 Wendemarker (Vorschlag: Münzen oder Kieselsteine), optional 1 Würfel.</div>
+      </section>
+
+      <section style="display:flex;flex-wrap:wrap;gap:14px 24px;border-top:1px solid #18202E;padding-top:20px;">
+        <div style="flex:0 0 200px;max-width:100%;font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#C42E7C;">03 · Die sechs Kategorien</div>
+        <div style="flex:1 1 320px;min-width:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:10px;">
+          <sc-for list="{{ catsInfo }}" as="c" hint-placeholder-count="7">
+            <div style="background:#FFFFFF;border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;border-top:4px solid {{ c.color }};">
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:{{ c.color }};">{{ c.no }} · Karten {{ c.range }}</div>
+              <div style="font-size:15px;font-weight:500;color:#18202E;">{{ c.name }}</div>
+              <div style="font-size:13px;color:#5A6270;">{{ c.topic }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="display:flex;flex-wrap:wrap;gap:14px 24px;border-top:1px solid #18202E;padding-top:20px;">
+        <div style="flex:0 0 200px;max-width:100%;font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#0E7F93;">04 · So ist eine Karte aufgebaut</div>
+        <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.7;color:#3A4250;">
+          <p style="margin:0;"><span style="font-weight:600;color:#18202E;">Vorderseite:</span> Nummer, Begriff, Kategorie und die Dialoggeschichte von der Bank.</p>
+          <p style="margin:0;"><span style="font-weight:600;color:#18202E;">Rückseite:</span></p>
+          <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;">
+            <li>Zwei Seiten – die beiden Wirkungen der Eigenschaft in einer Zeile.</li>
+            <li>Drehfrage – die Kernfrage der Karte: Wann hilft es, wann kippt es?</li>
+            <li>Stellung beziehen – eine Alltagsszene mit offener Entscheidung.</li>
+            <li>Und wenn du wüsstest, dass … – ein Beispielsatz, der die Lage verändert.</li>
+            <li>Bucay-Resonanz – passende Geschichte aus „Komm, ich erzähl dir eine Geschichte“ mit eigener Ein-Satz-Zusammenfassung.</li>
+            <li>Brückenfrage – verbindet die Bucay-Geschichte mit dem eigenen Leben.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section style="display:flex;flex-wrap:wrap;gap:14px 24px;border-top:1px solid #18202E;padding-top:20px;">
+        <div style="flex:0 0 200px;max-width:100%;font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#C42E7C;">05 · Die vier Fragearten</div>
+        <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:0;">
+          <sc-for list="{{ fragenInfo }}" as="f" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:6px 16px;padding:12px 0;border-bottom:1px solid rgba(24,32,46,0.08);">
+              <div style="display:flex;flex-direction:column;gap:2px;"><div style="font-size:15px;font-weight:500;color:#18202E;">{{ f.n }} · {{ f.name }}</div><div style="font-size:13px;font-style:italic;color:{{ f.color }};">{{ f.lead }}</div></div>
+              <div style="font-size:14px;line-height:1.6;color:#3A4250;">{{ f.onCard }}</div>
+            </div>
+          </sc-for>
+          <div style="font-size:13px;color:#5A6270;padding-top:10px;">Fragearten 1 und 2 funktionieren mit jeder Karte und stehen deshalb nicht extra darauf.</div>
+        </div>
+      </section>
+
+      <section style="display:flex;flex-wrap:wrap;gap:14px 24px;border-top:1px solid #18202E;padding-top:20px;">
+        <div style="flex:0 0 200px;max-width:100%;font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#0E7F93;">06 · Spielregeln (Grundspiel)</div>
+        <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:14px;">
+          <sc-for list="{{ rulesSteps }}" as="r" hint-placeholder-count="8">
+            <div style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;">
+              <div style="display:flex;flex-direction:column;gap:6px;"><div style="width:24px;height:2px;background:{{ r.color }};"></div><div style="font-size:20px;font-weight:300;color:{{ r.color }};">{{ r.no }}</div></div>
+              <div style="font-size:15px;line-height:1.7;color:#3A4250;"><span style="font-weight:600;color:#18202E;">{{ r.title }}:</span> {{ r.text }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="display:flex;flex-wrap:wrap;gap:14px 24px;border-top:1px solid #18202E;padding-top:20px;">
+        <div style="flex:0 0 200px;max-width:100%;font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#C42E7C;">07 · Joker Geduld</div>
+        <div style="flex:1 1 320px;min-width:0;font-size:15px;line-height:1.7;color:#3A4250;">Wer die Zusatzkarte zieht, darf sie behalten und einmal einsetzen, um eine Frage zu vertagen: „Das lasse ich noch reifen.“ Spätestens in der Schlussrunde wird sie beantwortet.</div>
+      </section>
+
+      <section style="display:flex;flex-wrap:wrap;gap:14px 24px;border-top:1px solid #18202E;padding-top:20px;">
+        <div style="flex:0 0 200px;max-width:100%;font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#0E7F93;">08 · Die Gesprächsregel</div>
+        <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:22px;font-weight:300;line-height:1.5;color:#18202E;">„Du darfst selbst erlebt, frei erfunden oder aus Sicht der Figur antworten. Passen geht auch. Wir hören zu – wir lösen einander nicht.“</div>
+          <div style="font-size:14px;color:#5A6270;">Ergänzend: Keine Ratschläge ungefragt. Keine Diagnosen. Was am Tisch erzählt wird, bleibt am Tisch.</div>
+        </div>
+      </section>
+
+      <section style="display:flex;flex-wrap:wrap;gap:14px 24px;border-top:1px solid #18202E;padding-top:20px;">
+        <div style="flex:0 0 200px;max-width:100%;font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#C42E7C;">09 · Varianten</div>
+        <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:0;">
+          <sc-for list="{{ variantsInfo }}" as="v" hint-placeholder-count="6">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:6px 16px;padding:12px 0;border-bottom:1px solid rgba(24,32,46,0.08);">
+              <div style="font-size:15px;font-weight:500;color:#18202E;">{{ v.name }}</div>
+              <div style="display:flex;flex-direction:column;gap:4px;"><div style="font-size:14px;line-height:1.6;color:#3A4250;">{{ v.ablauf }}</div><div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0E7F93;">Gut für: {{ v.gut }}</div></div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="display:flex;flex-wrap:wrap;gap:14px 24px;border-top:1px solid #18202E;padding-top:20px;">
+        <div style="flex:0 0 200px;max-width:100%;font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#0E7F93;">10 · Extra: Die Wippe</div>
+        <div style="flex:1 1 320px;min-width:0;font-size:15px;line-height:1.7;color:#3A4250;">Am digitalen Tisch zeigt die aktive Person nach der Frage auf einer Wippe zwischen den zwei Seiten der Karte, wo sie gerade steht. Kippt sie nach dem DUAL-Moment oder dem Gespräch auf die andere Seite, gibt es einen Wendemarker. Am echten Tisch geht das mit zwei Karten als Pole und einer Münze dazwischen.</div>
+      </section>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button onClick="{{ goSetup }}" style="border:none;background:#0E7F93;color:#FFFFFF;border-radius:999px;padding:16px 28px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#18202E;">Los geht’s →</button>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isCards }}" hint-placeholder-val="{{ false }}">
+    <main style="max-width:1240px;margin:0 auto;padding:clamp(28px,6vw,56px) max(18px, env(safe-area-inset-left)) calc(96px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:#0E7F93;">Die 43 Karten</div>
+        <h2 style="margin:0;font-size:clamp(28px,4vw,40px);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;line-height:1.15;">Eine Eigenschaft, <span style="color:#C42E7C;">zwei Seiten</span></h2>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <sc-for list="{{ galleryCats }}" as="c" hint-placeholder-count="8">
+          <button onClick="{{ c.onPick }}" style="cursor:pointer;border-radius:999px;padding:9px 15px;font-size:12px;font-weight:500;border:1.5px solid {{ c.color }};background:{{ c.bg }};color:{{ c.fg }};">{{ c.name }}</button>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(46%,210px),1fr));gap:18px;">
+        <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="12">
+          <button onClick="{{ g.onOpen }}" style="text-align:left;cursor:pointer;background:#FFFFFF;border:1px solid rgba(24,32,46,0.08);border-radius:22px;padding:0;overflow:hidden;display:flex;flex-direction:column;min-height:250px;transition:transform .25s cubic-bezier(.2,.8,.25,1.3),box-shadow .25s;transform:rotate({{ g.tilt }}deg);" style-hover="transform:translateY(-6px) rotate(0deg);box-shadow:0 20px 36px -20px rgba(24,32,46,0.45);">
+            <div style="height:5px;background:{{ g.color }};width:100%;"></div>
+            <div style="padding:18px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1;width:100%;box-sizing:border-box;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+                <div style="font-size:34px;font-weight:300;line-height:0.9;color:{{ g.color }};">{{ g.nr }}</div>
+                <div style="font-size:8.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:{{ g.color }};text-align:right;">{{ g.catLabel }}</div>
+              </div>
+              <div lang="de" style="font-size:14px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#18202E;hyphens:auto;overflow-wrap:anywhere;">{{ g.title }}</div>
+              <div style="margin-top:auto;display:flex;flex-direction:column;gap:6px;">
+                <div style="font-size:12.5px;color:#0E7F93;font-weight:500;line-height:1.35;">{{ g.sideA }}</div>
+                <div style="display:flex;align-items:center;width:60px;">
+                  <div style="width:7px;height:7px;border-radius:50%;border:1.5px solid #E8489A;flex:none;"></div>
+                  <div style="flex:1;height:1px;background:linear-gradient(90deg,#E8489A,#1FAFC7);"></div>
+                  <div style="width:5px;height:5px;border-radius:50%;background:#1FAFC7;flex:none;"></div>
+                </div>
+                <div style="font-size:12.5px;color:#C42E7C;font-weight:500;line-height:1.35;">{{ g.sideB }}</div>
+              </div>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ hasOverlay }}" hint-placeholder-val="{{ false }}">
+    <div class="card-overlay" role="dialog" aria-modal="true" aria-label="Kartenansicht" onClick="{{ closeOverlay }}" style="position:fixed;inset:0;z-index:50;background:rgba(24,32,46,0.72);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:calc(16px + env(safe-area-inset-top)) 12px calc(16px + env(safe-area-inset-bottom));overflow:auto;">
+      <div class="overlay-card" onClick="{{ stop }}" style="width:min(400px,92vw);height:min(600px,calc(100dvh - 120px));flex:none;cursor:pointer;animation:dualPop .35s cubic-bezier(.2,.8,.25,1.2);">
+        <div onClick="{{ flipOverlay }}" style="width:100%;height:100%;">
+          <dc-import name="DualKarte" card="{{ overlayCard }}" flipped="{{ overlayFlip }}" story-size="{{ storySize }}" hint-size="100%,100%" style="width:100%;height:100%;"></dc-import>
+        </div>
+      </div>
+      <div onClick="{{ stop }}" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+        <button onClick="{{ overlayPrev }}" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.5);background:transparent;color:#FFFFFF;cursor:pointer;font-size:16px;" style-hover="background:#FFFFFF;color:#18202E;">←</button>
+        <button onClick="{{ flipOverlay }}" style="border:none;background:#FFFFFF;color:#18202E;border-radius:999px;padding:0 24px;height:44px;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;" style-hover="background:#1FAFC7;color:#FFFFFF;">Umdrehen</button>
+        <button onClick="{{ overlayNext }}" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.5);background:transparent;color:#FFFFFF;cursor:pointer;font-size:16px;" style-hover="background:#FFFFFF;color:#18202E;">→</button>
+        <button aria-label="Kartenansicht schließen" onClick="{{ closeOverlay }}" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.5);background:transparent;color:#FFFFFF;cursor:pointer;font-size:16px;" style-hover="background:#C42E7C;border-color:#C42E7C;">×</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <footer style="border-top:1px solid rgba(24,32,46,0.08);">
+    <div style="max-width:1240px;margin:0 auto;padding:22px 18px calc(22px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#5A6270;">
+      <span>KARDI. · Yasmin Kardi</span>
+      <span>Alles ist DUAL · Ideas to Impact.</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;verspielt&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Stil&quot;},&quot;wippe&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Spiel&quot;},&quot;storyGross&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Lesbarkeit&quot;}}">
+const KEY = 'kardi-dual-v1';
+const FRAGEN = [
+  { n: 1, name: 'Wiedererkennen', lead: '„Das kenne ich.“', onCard: 'frei: „Erzähl eine Situation, in der dir diese Eigenschaft begegnet ist.“', color: '#0E7F93' },
+  { n: 2, name: 'Seite wechseln', lead: '„Es könnte auch anders sein.“', onCard: 'frei: „Wann zeigt sich bei dir die andere Seite?“', color: '#C42E7C' },
+  { n: 3, name: 'Grenze finden', lead: '„Bis hierhin – und dann?“', onCard: 'Drehfrage', color: '#1FAFC7' },
+  { n: 4, name: 'Stellung beziehen', lead: '„Was würdest du tun?“', onCard: 'Entscheidungsszene plus „Und wenn du wüsstest, dass …?“', color: '#E8489A' }
+];
+const VARIANTS = [
+  { id: 'grund', name: 'Grundspiel', players: '2–6', ablauf: 'Ziehen, vorlesen, umdrehen, Frageart wählen, antworten. Danach ergänzen alle kurz.', gut: 'Alle Runden' },
+  { id: 'bank', name: 'Bankgespräch', players: '2', ablauf: 'Abwechselnd ist eine Person „er“ (fragt), die andere „sie“ (antwortet mit einer Gegenfrage). Erst nach drei Gegenfragen gibt es eine Antwort.', gut: 'Paare, beste Freund:innen, Dates' },
+  { id: 'seite', name: 'Seitenwechsel', players: '2–6', ablauf: 'Die aktive Person antwortet erst auf die Drehfrage, dann muss sie die Gegenseite verteidigen – überzeugend.', gut: 'Freundeskreise, Debattierlustige' },
+  { id: 'zwilling', name: 'Zwillinge', players: '2–6', ablauf: 'Zwei Karten ziehen, z. B. Optimismus und Pessimismus. Welche Seiten berühren sich?', gut: 'Fortgeschrittene Runden' },
+  { id: 'bucay', name: 'Bucay-Abend', players: '2–6', ablauf: 'Pro Abend eine Kategorie. Vorher lesen alle die sieben zugeordneten Bucay-Geschichten im Buch.', gut: 'Buchclubs, lange Abende' },
+  { id: 'tag', name: 'Tagesbegleiter', players: '1', ablauf: 'Morgens eine Karte ziehen, abends nur die Drehfrage beantworten.', gut: 'Allein, Journaling' },
+  { id: 'team', name: 'Cliquen-Abend', players: '2–6', ablauf: 'Nur Frageart 4 nutzen; die Szenen auf euren eigenen Alltag übertragen – WG, Beziehung, Freundeskreis.', gut: 'WG-Abende, Roadtrips, Geburtstage' }
+];
+const RULES = [
+  ['Vorbereitung', 'Karten mischen, Stapel mit der Geschichte nach oben in die Mitte legen. Wer zuletzt auf einer Parkbank saß, beginnt.'],
+  ['Vorlesen', 'Die aktive Person zieht eine Karte und liest die Geschichte vor – gern mit verteilten Rollen (er/sie).'],
+  ['Frage wählen', 'Die Person links neben ihr dreht die Karte um und wählt eine Frageart (1–4).'],
+  ['Antworten', 'Die aktive Person antwortet. Danach dürfen alle anderen kurz ergänzen.'],
+  ['Der DUAL-Moment', 'Bei Frageart 4 darf eine Person aus der Runde einen Satz beginnen: „Und wenn du wüsstest, dass …?“ Die aktive Person darf ihre Entscheidung ändern – muss aber nicht.'],
+  ['Wendemarker', 'Wer im Laufe des Gesprächs die Seite wechselt („Hm, eigentlich sehe ich es jetzt anders“), legt einen Wendemarker vor sich. Das ist kein Punkt, sondern eine kleine Auszeichnung fürs Mitdenken.'],
+  ['Bucay-Runde (optional)', 'Kennt jemand die genannte Bucay-Geschichte, erzählt er sie in eigenen Worten nach. Danach stellt die Runde die Brückenfrage.'],
+  ['Ende', 'Wenn die Zeit um ist, nennt jede Person die Karte, die ihr heute am meisten über sich verraten hat.']
+];
+const ACC = ['#0E7F93', '#C42E7C', '#1FAFC7', '#E8489A'];
+const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pad = n => String(n).padStart(2, '0');
+const freshTurn = () => ({ current: null, twin: null, flipped: false, qtype: null, step: 'draw', wennShown: false, wippeFirst: null, wippeNow: null, awarded: false, bankCount: 0, bucayOpen: false });
+
+class Component extends DCLogic {
+  state = Object.assign({
+    screen: 'start', players: [{ name: '', markers: 0, joker: false }, { name: '', markers: 0, joker: false }],
+    variant: 'grund', dice: false, catSel: 0, starter: 0, game: null, galleryCat: -1, overlay: null, overlayFlip: false, ready: !!window.DUAL_DATA
+  }, this.load());
+
+  load() { try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s) { s.overlay = null; return s; } } catch (e) {} return {}; }
+  componentDidMount() { if (!window.DUAL_DATA) { this._t = setInterval(() => { if (window.DUAL_DATA) { clearInterval(this._t); this.setState({ ready: true }); } }, 80); } }
+  componentWillUnmount() { clearInterval(this._t); clearTimeout(this._r); }
+  componentDidUpdate() { try { const { ready, overlay, ...rest } = this.state; localStorage.setItem(KEY, JSON.stringify(rest)); } catch (e) {} }
+
+  D() { return window.DUAL_DATA || { cats: [], cards: [], joker: {} }; }
+  card(nr) { return this.D().cards.find(c => c.nr === nr) || null; }
+  pname(p, i) { return (p && p.name && p.name.trim()) || ('Person ' + (i + 1)); }
+  setGame(fn) { this.setState(s => ({ game: Object.assign({}, s.game, fn(s.game, s)) })); }
+
+  startGame = () => this.setState(s => {
+    let players = s.players.map(p => ({ name: p.name, markers: 0, joker: false }));
+    if (s.variant === 'tag') players = players.slice(0, 1);
+    if (s.variant === 'bank') players = players.slice(0, 2);
+    let catSel = s.catSel; if (s.variant === 'bucay' && !catSel) catSel = 1;
+    let pool = this.D().cards.filter(c => !catSel || c.catId === catSel || c.joker);
+    const starter = Math.min(s.starter, players.length - 1);
+    return { players, catSel, screen: 'table', game: Object.assign({ deck: shuffle(pool.map(c => c.nr)), active: starter, played: [], deferred: [], favs: {}, roll: null, rollSpin: 0, msg: '' }, freshTurn(), { bucayOpen: s.variant === 'bucay' }) };
+  });
+
+  drawFrom = (catId) => this.setState(s => {
+    const g = s.game; let deck = [...g.deck];
+    if (!deck.length) return { screen: 'end' };
+    let idx = 0;
+    if (catId) {
+      const jokerIdx = deck.indexOf('43');
+      if (jokerIdx >= 0 && Math.random() < 1 / 8) idx = jokerIdx;
+      else idx = deck.findIndex(nr => this.card(nr).catId === catId);
+      if (idx < 0) return { game: Object.assign({}, g, { msg: 'Kategorie ' + catId + ' ist leer. Noch einmal würfeln.' }) };
+    }
+    const nr = deck.splice(idx, 1)[0];
+    const players = s.players.map(p => ({ ...p }));
+    if (nr === '43') { players[g.active].joker = true; return { players, game: Object.assign({}, g, freshTurn(), { deck, current: '43', step: 'joker', msg: '', bucayOpen: s.variant === 'bucay' }) }; }
+    let twin = null;
+    if (s.variant === 'zwilling') { const ti = deck.findIndex(n => n !== '43'); if (ti >= 0) twin = deck.splice(ti, 1)[0]; }
+    return { game: Object.assign({}, g, freshTurn(), { deck, current: nr, twin, step: 'read', msg: '', bucayOpen: s.variant === 'bucay' }) };
+  });
+
+  pileClick = () => { const g = this.state.game; if (!g || g.step !== 'draw') return; if (this.state.dice) this.rollDice(); else this.drawFrom(0); };
+  rollDice = () => {
+    const g = this.state.game; if (!g || g.step !== 'draw' || this._rolling) return;
+    const r = 1 + Math.floor(Math.random() * 6); this._rolling = true;
+    this.setGame(g => ({ roll: r, rollSpin: (g.rollSpin || 0) + (Math.random() < 0.5 ? 360 : -360) }));
+    this._r = setTimeout(() => { this._rolling = false; this.drawFrom(r); }, 750);
+  };
+  keepJoker = () => this.setGame(() => ({ step: 'draw', current: null }));
+  flipToAsk = () => { const v = this.state.variant; this.setGame(() => (v === 'seite' || v === 'tag') ? { flipped: true, qtype: 3, step: 'answer' } : v === 'team' ? { flipped: true, qtype: 4, step: 'answer' } : { flipped: true, step: 'ask' }); };
+  toggleFlip = () => { const g = this.state.game; if (!g || !g.current) return; if (g.step === 'read') return this.flipToAsk(); this.setGame(g => ({ flipped: !g.flipped })); };
+  nextTurn = () => this.setState(s => {
+    const g = s.game; const played = [...g.played];
+    if (g.current && g.current !== '43') played.push({ nr: g.current, by: g.active });
+    if (g.twin) played.push({ nr: g.twin, by: g.active });
+    const n = s.players.length;
+    const game = Object.assign({}, g, freshTurn(), { played, active: (g.active + 1) % n, roll: null, bucayOpen: s.variant === 'bucay' });
+    return game.deck.length ? { game } : { game, screen: 'end' };
+  });
+  useJoker = () => this.setState(s => {
+    const g = s.game; const c = this.card(g.current); const players = s.players.map(p => ({ ...p }));
+    players[g.active].joker = false;
+    const deferred = [...g.deferred, { player: this.pname(players[g.active], g.active), nr: c.nr, title: c.name, q: this.qText(c, g.qtype) }];
+    return { players, game: Object.assign({}, g, { deferred }) };
+  }, this.nextTurn);
+  award = (i) => this.setState(s => ({ players: s.players.map((p, j) => j === i ? { ...p, markers: p.markers + 1 } : p) }));
+  qText(c, q) { if (!c) return ''; return q === 1 ? 'Erzähl eine Situation, in der dir diese Eigenschaft begegnet ist.' : q === 2 ? 'Wann zeigt sich bei dir die andere Seite?' : q === 3 ? c.dreh : c.szene; }
+
+  renderVals() {
+    const s = this.state, D = this.D(), g = s.game, verspielt = this.props.verspielt ?? true;
+    const go = screen => () => this.setState({ screen });
+    const hasGame = !!g && g.deck && (g.deck.length || g.current);
+    const navItems = [['Spielen', hasGame ? 'table' : 'setup', ['table', 'setup', 'end']], ['Regeln', 'rules', ['rules']], ['Karten', 'cards', ['cards']]];
+    const nav = navItems.map(([label, scr, act]) => { const on = act.includes(s.screen); return { label, go: go(scr), color: on ? '#18202E' : '#5A6270', line: on ? '#0E7F93' : 'transparent' }; });
+    const cards = D.cards;
+    const storySize = this.props.storyGross ? 14.5 : undefined;
+    const v = {
+      nav, brandKey: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.setState({ screen: 'start' }); } }, goStart: go('start'), goRules: go('rules'), goCards: go('cards'), goSetup: go('setup'), storySize,
+      isStart: s.screen === 'start', isSetup: s.screen === 'setup', isTable: s.screen === 'table' && !!g, isEnd: s.screen === 'end' && !!g, isRules: s.screen === 'rules', isCards: s.screen === 'cards',
+      startLabel: hasGame ? 'Weiterspielen' : 'Spiel starten', startPrimary: go(hasGame ? 'table' : 'setup'),
+      heroA: this.card('02'), heroB: this.card('10'), tiltA: verspielt ? -9 : -4, tiltB: verspielt ? 9 : 4,
+      catsInfo: D.cats.map(c => ({ no: pad(c.id), name: c.name, range: c.range, topic: c.topic, color: c.color })).concat([{ no: '–', name: 'Zusatzkarte', range: '43', topic: 'Geduld (Joker)', color: '#C42E7C' }]),
+      fragenInfo: FRAGEN, variantsInfo: VARIANTS.filter(x => x.id !== 'grund'),
+      rulesSteps: RULES.map(([title, text], i) => ({ no: pad(i + 1), title, text, color: ACC[i % 4] }))
+    };
+
+    // setup
+    const maxP = s.variant === 'tag' ? 1 : s.variant === 'bank' ? 2 : 6;
+    const minP = s.variant === 'tag' ? 1 : 2;
+    const sp = s.players.slice(0, maxP);
+    v.setupPlayers = sp.map((p, i) => ({
+      no: i + 1, name: p.name, placeholder: 'Person ' + (i + 1), canRemove: sp.length > minP,
+      ring: i === s.starter ? '#0E7F93' : 'rgba(24,32,46,0.2)', fill: i === s.starter ? '#0E7F93' : 'transparent', numColor: i === s.starter ? '#FFFFFF' : '#5A6270',
+      onName: e => { const val = e.target.value; this.setState(st => ({ players: st.players.map((q, j) => j === i ? { ...q, name: val } : q) })); },
+      onRemove: () => this.setState(st => ({ players: st.players.filter((_, j) => j !== i), starter: st.starter >= i && st.starter > 0 ? st.starter - 1 : st.starter })),
+      onStarter: () => this.setState({ starter: i })
+    }));
+    v.canAddPlayer = sp.length < maxP;
+    v.addPlayer = () => this.setState(st => ({ players: [...st.players.slice(0, maxP), { name: '', markers: 0, joker: false }] }));
+    v.starterHint = 'Es beginnt: ' + this.pname(sp[Math.min(s.starter, sp.length - 1)], Math.min(s.starter, sp.length - 1)) + (s.variant === 'tag' ? ' – allein, mit Notizbuch.' : '.');
+    v.variants = VARIANTS.map((x, i) => { const on = x.id === s.variant; return { ...x, no: pad(i + 1), bg: on ? '#18202E' : '#FFFFFF', fg: on ? '#FFFFFF' : '#18202E', border: on ? '#18202E' : 'rgba(24,32,46,0.1)', accent: on ? '#1FAFC7' : '#0E7F93', dot: on ? '#1FAFC7' : 'transparent', players: x.players + (x.players === '1' ? ' Person' : ' Personen'), onPick: () => this.setState(st => { const need = x.id === 'tag' ? 1 : 2; const players = [...st.players]; while (players.length < need) players.push({ name: '', markers: 0, joker: false }); return { variant: x.id, players, catSel: x.id === 'bucay' && !st.catSel ? 1 : st.catSel }; }) }; });
+    const catBtn = (id, name, color, sel, onPick, no) => { const on = id === sel; return { no, name, color, bg: on ? color : 'transparent', fg: on ? '#FFFFFF' : '#18202E', onPick }; };
+    v.setupCats = (s.variant === 'bucay' ? [] : [catBtn(0, 'Alle Kategorien', '#18202E', s.catSel, () => this.setState({ catSel: 0 }), '43')]).concat(D.cats.map(c => catBtn(c.id, c.name, c.color, s.catSel, () => this.setState({ catSel: c.id }), pad(c.id))));
+    v.catHint = s.variant === 'bucay' ? 'Bucay-Abend: eine Kategorie pro Abend.' : s.catSel ? 'Nur diese Kategorie, plus Joker.' : 'Alle 43 Karten im Stapel.';
+    v.toggleDice = () => this.setState(st => ({ dice: !st.dice }));
+    v.diceTrack = s.dice ? '#0E7F93' : 'rgba(24,32,46,0.2)'; v.diceKnob = s.dice ? 23 : 3;
+    v.startGame = this.startGame;
+
+    // table
+    if (g) {
+      const n = s.players.length, a = g.active, c = this.card(g.current), tw = this.card(g.twin);
+      const nb = (a + 1) % n;
+      const activeName = this.pname(s.players[a], a), nbName = this.pname(s.players[nb], nb);
+      v.activeName = activeName;
+      v.tablePlayers = s.players.map((p, i) => { const on = i === a; return { name: this.pname(p, i), marks: Array.from({ length: p.markers }, (_, k) => ({ k })), joker: p.joker, jokerColor: on ? '#FFFFFF' : '#C42E7C', bg: on ? '#18202E' : '#FFFFFF', fg: on ? '#FFFFFF' : '#18202E', border: on ? '#18202E' : 'rgba(24,32,46,0.1)', btnBorder: on ? 'rgba(255,255,255,0.35)' : 'rgba(24,32,46,0.2)', onMark: () => this.award(i) }; });
+      v.deckCount = g.deck.length; v.variantName = (VARIANTS.find(x => x.id === s.variant) || {}).name;
+      v.endGame = go('end'); v.resumeGame = go('table');
+      v.showPile = g.step === 'draw'; v.showCard = !!c && g.step !== 'draw';
+      v.pileT1 = verspielt ? 4 : 1.5; v.pileT2 = verspielt ? -3 : -1; v.cardTilt = verspielt ? (parseInt(g.current, 10) % 2 ? -1.2 : 1.2) : 0;
+      v.pileClick = this.pileClick; v.pileLabel = s.dice ? 'Würfeln oder tippen' : 'Tippen zum Ziehen';
+      v.current = c; v.flipped = g.flipped; v.toggleFlip = this.toggleFlip;
+      v.showDraw = g.step === 'draw'; v.drawLabel = s.dice ? 'Würfeln' : 'Karte ziehen';
+      v.showDice = s.dice && (g.step === 'draw' || g.roll);
+      const rc = g.roll ? D.cats[g.roll - 1] : null;
+      v.rollFace = g.roll || '?'; v.rollSpin = Math.round((g.rollSpin || 0) / 360) * 360; v.rollColor = rc ? rc.color : '#18202E';
+      v.rollCatLabel = rc ? 'Kategorie ' + g.roll : 'Würfel'; v.rollCatName = rc ? rc.name : 'Tippen zum Würfeln';
+      v.rollDice = this.rollDice;
+      v.isJokerStep = g.step === 'joker'; v.keepJoker = this.keepJoker;
+      v.isRead = g.step === 'read'; v.isAsk = g.step === 'ask'; v.isAnswer = g.step === 'answer';
+      v.isBank = s.variant === 'bank'; v.bankEr = nbName; v.bankSie = activeName;
+      v.flipToAsk = this.flipToAsk;
+      v.flipLabel = (s.variant === 'tag') ? 'Abends: Karte umdrehen' : (n > 1 ? nbName + ' dreht um' : 'Karte umdrehen');
+      const steps = {
+        draw: ['Zug · ' + activeName, activeName + ' ist dran.', s.dice ? 'Würfeln: Die Zahl bestimmt die Kategorie. Dann die oberste passende Karte ziehen.' : (g.msg || 'Eine Karte vom Stapel ziehen. Die Geschichte liegt oben.')],
+        joker: ['Zusatzkarte · Joker', activeName + ' zieht die Geduld.', 'Du darfst sie behalten und einmal einsetzen, um eine Frage zu vertagen. Spätestens in der Schlussrunde wird sie beantwortet.'],
+        read: ['01 · Vorlesen', activeName + ' liest die Geschichte vor.', s.variant === 'tag' ? 'Morgens: Geschichte lesen und mit in den Tag nehmen. Abends nur die Drehfrage beantworten.' : 'Gern mit verteilten Rollen: Er bringt Fragen mit. Sie antwortet selten direkt.'],
+        ask: ['02 · Frage wählen', nbName + ' wählt eine Frageart.', 'Die Person links neben ' + activeName + ' hat die Karte umgedreht. Fragearten 1 und 2 gehen mit jeder Karte.'],
+        answer: ['03 · Antworten', activeName + ' antwortet.', s.variant === 'tag' ? 'Heute Abend nur diese eine Frage.' : 'Selbst erlebt, frei erfunden oder aus Sicht der Figur. Passen geht auch.']
+      };
+      if (g.msg && g.step === 'draw') steps.draw[2] = g.msg;
+      [v.stepEyebrow, v.stepTitle, v.stepText] = steps[g.step] || steps.draw;
+      v.fragearten = FRAGEN.map(f => ({ ...f, onPick: () => this.setGame(() => ({ qtype: f.n, step: 'answer' })) }));
+      const q = FRAGEN[(g.qtype || 1) - 1];
+      v.qNo = q.n; v.qName = q.name; v.qColor = q.color; v.qText = this.qText(c, g.qtype);
+      v.canChangeQ = !['seite', 'tag', 'team'].includes(s.variant); v.changeQ = () => this.setGame(() => ({ step: 'ask', qtype: null, wennShown: false }));
+      v.isQ4 = g.qtype === 4; v.wennShown = g.wennShown; v.wennHidden = !g.wennShown; v.wennText = c ? c.wenn.replace(/^…\s*/, '') : '';
+      v.revealWenn = () => this.setGame(() => ({ wennShown: true }));
+      v.isSeite = s.variant === 'seite';
+      v.bankDots = [1, 2, 3].map(k => ({ n: k, bg: g.bankCount >= k ? '#C42E7C' : 'transparent', fg: g.bankCount >= k ? '#FFFFFF' : '#C42E7C', onClick: () => this.setGame(gg => ({ bankCount: gg.bankCount === k ? k - 1 : k })) }));
+      v.bankHint = g.bankCount >= 3 ? 'Jetzt darf geantwortet werden.' : 'Noch ' + (3 - g.bankCount) + ' bis zur Antwort.';
+      v.showWippe = (this.props.wippe ?? true) && !!c && s.variant !== 'tag';
+      v.sideA = c ? c.sideA : ''; v.sideB = c ? c.sideB : '';
+      const pts = [-2, -1, 0, 1, 2];
+      v.wippe = pts.map((p, i) => {
+        const now = g.wippeNow === p, first = g.wippeFirst === p && g.wippeNow !== p;
+        const col = p < 0 ? '#0E7F93' : p > 0 ? '#C42E7C' : '#5A6270';
+        const size = now ? 30 : first ? 18 : 16;
+        return { left: 'calc(14px + ' + (i * 25) + '% - ' + (i * 7) + 'px)', top: 20 - size / 2, size, offset: -size / 2, color: col, bg: now ? col : first ? 'rgba(24,32,46,0.15)' : '#F5F4F2', title: p === 0 ? 'Mitte' : (p < 0 ? v.sideA : v.sideB), onClick: () => this.setGame(gg => ({ wippeFirst: gg.wippeFirst == null ? p : gg.wippeFirst, wippeNow: p })) };
+      });
+      v.wippeHint = g.wippeFirst == null ? 'Tippe einen Punkt.' : 'Erster Stand: blass. Jetzt: gefüllt.';
+      v.switchDetected = !g.awarded && g.wippeFirst != null && g.wippeNow != null && Math.sign(g.wippeFirst) * Math.sign(g.wippeNow) < 0;
+      v.awardActive = () => { this.award(a); this.setGame(() => ({ awarded: true })); };
+      v.isZwilling = !!tw; v.twinNr = tw ? tw.nr : ''; v.twinTitle = tw ? tw.title : ''; v.twinColor = tw ? tw.color : '#18202E'; v.twinSides = tw ? tw.sideA + ' ↔ ' + tw.sideB : '';
+      v.openTwin = () => this.setState({ overlay: g.twin, overlayFlip: true });
+      v.toggleBucay = () => this.setGame(gg => ({ bucayOpen: !gg.bucayOpen })); v.bucayOpen = g.bucayOpen; v.bucayRot = g.bucayOpen ? 90 : 0;
+      v.bucayText = c ? c.bucay : ''; v.brueckeText = c ? c.bruecke : '';
+      v.nextTurn = this.nextTurn; v.nextLabel = s.variant === 'tag' ? 'Für heute fertig' : (n > 1 ? 'Weiter zu ' + nbName : 'Nächste Karte');
+      v.canUseJoker = !!s.players[a] && s.players[a].joker; v.useJoker = this.useJoker;
+
+      // end
+      v.hasDeferred = g.deferred.length > 0; v.deferred = g.deferred;
+      const playedCards = g.played.map(p => this.card(p.nr)).filter(Boolean);
+      v.noPlayed = playedCards.length === 0;
+      v.endPlayers = s.players.map((p, i) => ({
+        name: this.pname(p, i), marks: Array.from({ length: p.markers }, (_, k) => ({ k })),
+        markText: p.markers === 1 ? '1 Wendemarker' : p.markers + ' Wendemarker',
+        cards: playedCards.map(pc => { const on = g.favs[i] === pc.nr; return { nr: pc.nr, name: pc.name, color: pc.color, bg: on ? pc.color : '#FFFFFF', fg: on ? '#FFFFFF' : '#18202E', onPick: () => this.setGame(gg => ({ favs: { ...gg.favs, [i]: gg.favs[i] === pc.nr ? null : pc.nr } })) }; })
+      }));
+    }
+
+    // gallery
+    const gcBtn = (id, name, color) => { const on = s.galleryCat === id; return { name, color, bg: on ? color : 'transparent', fg: on ? '#FFFFFF' : '#18202E', onPick: () => this.setState({ galleryCat: id }) }; };
+    v.galleryCats = [gcBtn(-1, 'Alle', '#18202E')].concat(D.cats.map(c => gcBtn(c.id, pad(c.id) + ' · ' + c.name, c.color))).concat([gcBtn(0, 'Joker', '#C42E7C')]);
+    const gl = cards.filter(c => s.galleryCat === -1 || s.galleryCat == null || c.catId === s.galleryCat);
+    v.gallery = gl.map((c, i) => ({ nr: c.nr, title: c.title, catLabel: c.catId ? c.catName : 'Joker', color: c.color, sideA: c.sideA, sideB: c.sideB, tilt: verspielt ? [-1.2, 0.8, -0.5, 1.1, -0.9, 0.4][i % 6] : 0, onOpen: () => this.setState({ overlay: c.nr, overlayFlip: false }) }));
+
+    // overlay
+    v.hasOverlay = !!s.overlay; v.overlayCard = this.card(s.overlay); v.overlayFlip = s.overlayFlip;
+    v.closeOverlay = () => this.setState({ overlay: null }); v.stop = e => e.stopPropagation();
+    v.flipOverlay = e => { e && e.stopPropagation(); this.setState(st => ({ overlayFlip: !st.overlayFlip })); };
+    const step = d => e => { e.stopPropagation(); const list = s.screen === 'cards' ? gl : cards; const i = list.findIndex(c => c.nr === s.overlay); const nx = list[(i + d + list.length) % list.length]; this.setState({ overlay: nx.nr, overlayFlip: false }); };
+    v.overlayPrev = step(-1); v.overlayNext = step(1);
+    return v;
+  }
+}
+</script>
+</body>
+</html>
