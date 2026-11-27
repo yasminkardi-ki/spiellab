@@ -1,0 +1,11 @@
+{
+  "appId": "de.kardi.allesistdual",
+  "appName": "Alles ist DUAL",
+  "webDir": "dist",
+  "backgroundColor": "#F5F4F2",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#F5F4F2",
+    "preferredContentMode": "mobile"
+  }
+}

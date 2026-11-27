@@ -1,0 +1,35 @@
+/* Native-sized controls; existing KARDI. artwork and desktop layout are preserved. */
+html { min-height: 100%; scroll-padding-top: 100px; }
+body { min-height: 100dvh; }
+button, input, select { min-height: 44px; }
+button:focus-visible, [role="button"]:focus-visible, a:focus-visible {
+  outline: 3px solid #C42E7C; outline-offset: 4px;
+}
+.app-header [role="button"] { min-height: 44px; justify-content: center; }
+.install-help { margin: 0 auto; max-width: 760px; padding: 16px 20px; font: 13px/1.6 -apple-system, sans-serif; color: #3A4250; }
+.install-help summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: #0E7F93; }
+.install-help p { margin: 0 0 12px; }
+@media (max-width: 640px) {
+  html { scroll-padding-top: 85px; }
+  body { padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
+  /* A filtered ancestor would anchor fixed navigation to the header on iOS. */
+  .app-header { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .app-nav {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: flex !important; flex-wrap: nowrap !important; justify-content: space-around !important;
+    gap: 0 !important; padding: 6px max(12px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    background: rgba(245,244,242,.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(24,32,46,.12);
+  }
+  .app-nav button { flex: 1; min-height: 48px; font-size: 11px !important; }
+  .new-game { padding: 10px 14px !important; letter-spacing: .1em !important; }
+  .start-screen { gap: 24px !important; padding-top: 30px !important; }
+  .start-screen h1 { font-size: clamp(48px, 15vw, 72px) !important; }
+  .hero-cards { flex-basis: 100% !important; height: 450px !important; }
+  .table-card { flex-basis: 100% !important; height: min(600px, 75dvh) !important; min-height: 420px; }
+  input { font-size: 16px !important; } /* Prevent Safari's input focus zoom. */
+  .overlay-card { height: min(600px, calc(100dvh - 160px - env(safe-area-inset-top) - env(safe-area-inset-bottom))) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

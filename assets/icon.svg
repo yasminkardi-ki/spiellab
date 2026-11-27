@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" fill="#18202E"/>
+  <rect x="263" y="217" width="340" height="500" rx="40" fill="#C42E7C" transform="rotate(-14 433 467)"/>
+  <rect x="421" y="233" width="340" height="500" rx="40" fill="#1FAFC7" transform="rotate(12 591 483)"/>
+  <rect x="324" y="218" width="376" height="552" rx="40" fill="#F5F4F2"/>
+  <text x="512" y="394" text-anchor="middle" font-family="sans-serif" font-size="46" letter-spacing="12" fill="#18202E">ALLES IST</text>
+  <text x="512" y="517" text-anchor="middle" font-family="sans-serif" font-weight="600" font-size="104" letter-spacing="4" fill="#0E7F93">DUAL</text>
+  <path d="M409 610H615" stroke="#18202E" stroke-width="5"/>
+  <circle cx="401" cy="610" r="19" fill="#F5F4F2" stroke="#C42E7C" stroke-width="8"/>
+  <circle cx="623" cy="610" r="16" fill="#1FAFC7"/>
+  <text x="512" y="706" text-anchor="middle" font-family="sans-serif" font-size="32" letter-spacing="9" fill="#18202E">KARDI.</text>
+</svg>

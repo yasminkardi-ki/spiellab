@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+</helmet>
+<div style="width:100%;height:100%;perspective:1800px;font-family:'Montserrat',sans-serif;">
+  <div style="position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.2,.8,.25,1.15);transform:rotateY({{ deg }}deg);">
+    <div style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#FFFFFF;border-radius:26px;border:1px solid rgba(24,32,46,0.1);box-shadow:0 18px 40px -18px rgba(24,32,46,0.35);display:flex;flex-direction:column;overflow:hidden;">
+      <div style="height:6px;background:{{ card.color }};flex:none;"></div>
+      <div style="padding:22px 26px 0 26px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex:none;">
+        <div style="font-size:52px;font-weight:300;line-height:0.9;color:{{ card.color }};letter-spacing:-0.02em;">{{ card.nr }}</div>
+        <div style="text-align:right;display:flex;flex-direction:column;gap:4px;align-items:flex-end;">
+          <div style="font-size:9.5px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:{{ card.color }};">{{ card.catLabel }}</div>
+          <div style="font-size:11px;font-weight:500;color:#3A4250;max-width:170px;line-height:1.35;text-wrap:balance;">{{ card.catName }}</div>
+        </div>
+      </div>
+      <div style="padding:14px 26px 0 26px;flex:none;">
+        <div lang="de" style="font-size:21px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:#18202E;line-height:1.2;hyphens:auto;overflow-wrap:anywhere;">{{ card.title }}</div>
+        <sc-if value="{{ card.titleSub }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:12px;font-weight:400;font-style:italic;color:#C42E7C;margin-top:4px;">{{ card.titleSub }}</div>
+        </sc-if>
+        <div style="display:flex;align-items:center;gap:0;margin-top:14px;">
+          <div style="width:8px;height:8px;border-radius:50%;border:1.5px solid #E8489A;flex:none;"></div>
+          <div style="flex:1;height:1px;background:linear-gradient(90deg,#E8489A,#1FAFC7);"></div>
+          <div style="width:6px;height:6px;border-radius:50%;background:#1FAFC7;flex:none;"></div>
+        </div>
+      </div>
+      <div style="flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:16px 22px 8px 22px;display:flex;flex-direction:column;gap:5px;font-size:{{ storySize }}px;line-height:1.55;">
+        <sc-for list="{{ story }}" as="l" hint-placeholder-count="8">
+          <div style="color:{{ l.color }};font-style:{{ l.style }};padding-left:{{ l.indent }}px;text-wrap:pretty;">{{ l.t }}</div>
+        </sc-for>
+      </div>
+      <div style="flex:none;padding:10px 26px 16px 26px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(24,32,46,0.08);">
+        <div style="font-size:8.5px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#5A6270;">Die Geschichte auf der Bank</div>
+        <div style="font-size:9px;letter-spacing:0.3em;color:#18202E;">KARDI.</div>
+      </div>
+    </div>
+    <div style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#18202E;border-radius:26px;box-shadow:0 18px 40px -18px rgba(24,32,46,0.5);display:flex;flex-direction:column;overflow:hidden;color:#FFFFFF;">
+      <div style="height:6px;background:{{ card.color }};flex:none;"></div>
+      <div style="padding:20px 26px 0 26px;display:flex;justify-content:space-between;align-items:baseline;flex:none;">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#1FAFC7;">{{ card.nr }} · {{ card.title }}</div>
+        <div style="font-size:9px;letter-spacing:0.3em;color:rgba(255,255,255,0.75);">KARDI.</div>
+      </div>
+      <div style="padding:18px 26px 4px 26px;flex:none;">
+        <div style="font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:10px;">01 · Zwei Seiten</div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;">
+          <div style="font-size:14px;font-weight:500;line-height:1.3;color:#FFFFFF;text-wrap:balance;">{{ card.sideA }}</div>
+          <div style="display:flex;align-items:center;width:46px;">
+            <div style="width:8px;height:8px;border-radius:50%;border:1.5px solid #E8489A;flex:none;"></div>
+            <div style="flex:1;height:1px;background:linear-gradient(90deg,#E8489A,#1FAFC7);"></div>
+            <div style="width:6px;height:6px;border-radius:50%;background:#1FAFC7;flex:none;"></div>
+          </div>
+          <div style="font-size:14px;font-weight:500;line-height:1.3;color:#FFFFFF;text-align:right;text-wrap:balance;">{{ card.sideB }}</div>
+        </div>
+      </div>
+      <div style="flex:1;min-height:0;overflow:auto;padding:12px 26px 18px 26px;display:flex;flex-direction:column;gap:12px;">
+        <sc-for list="{{ backItems }}" as="b" hint-placeholder-count="5">
+          <div style="border-top:1px solid rgba(255,255,255,0.14);padding-top:10px;display:flex;flex-direction:column;gap:4px;">
+            <div style="font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:{{ b.color }};">{{ b.label }}</div>
+            <div style="font-size:12px;line-height:1.55;color:rgba(255,255,255,0.92);text-wrap:pretty;">{{ b.text }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:400,&quot;height&quot;:600},&quot;card&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;},&quot;flipped&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;storySize&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const c = this.props.card || {};
+    const story = (c.story || []).map(l => ({ t: l.t, color: l.q ? '#18202E' : '#5A6270', style: l.q ? 'normal' : 'italic', indent: l.q ? 0 : 0 }));
+    const len = (c.story || []).reduce((a, l) => a + l.t.length, 0);
+    const storySize = this.props.storySize ?? (len > 700 ? 12 : len > 520 ? 12.5 : 13.5);
+    const backItems = c.nr ? [
+      { label: '02 · Drehfrage', text: c.dreh, color: '#1FAFC7' },
+      { label: '03 · Stellung beziehen', text: c.szene, color: '#E8489A' },
+      { label: '04 · Und wenn du wüsstest, dass …', text: c.wenn, color: '#1FAFC7' },
+      { label: '05 · Bucay-Resonanz', text: c.bucay, color: '#E8489A' },
+      { label: '06 · Brückenfrage', text: c.bruecke, color: '#1FAFC7' }
+    ] : [];
+    return { card: c, story, storySize, backItems, deg: this.props.flipped ? 180 : 0 };
+  }
+}
+</script>
+</body>
+</html>
